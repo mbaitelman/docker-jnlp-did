@@ -1,11 +1,12 @@
-ARG agent_version=4.6-1
-FROM jenkins/inbound-agent:${agent_version}-alpine
+ARG agent_version=4.10-3
+FROM jenkins/inbound-agent:${agent_version}-alpine-jdk11
 
 # Elevate
 USER root
 
-ARG docker_version=20.10.6-r0
-RUN apk add --update docker=${docker_version} --repository=http://dl-cdn.alpinelinux.org/alpine/latest-stable/community \
+ARG docker_version=23.0.6-r5
+RUN apk --no-cache add -X https://dl-cdn.alpinelinux.org/alpine/v3.18/main -u alpine-keys \
+  && apk add --update docker=${docker_version} --repository=https://dl-cdn.alpinelinux.org/alpine/v3.18/community \
   && rm -rf /var/lib/apt/lists/*
   
 #USER jenkins
